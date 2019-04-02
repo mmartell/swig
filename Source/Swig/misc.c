@@ -59,7 +59,8 @@ void Swig_set_fakeversion(const char *version) {
  * ----------------------------------------------------------------------------- */
 
 const char *Swig_package_version(void) {
-  return fake_version ? fake_version : PACKAGE_VERSION;
+  //return fake_version ? fake_version : PACKAGE_VERSION;
+  return fake_version;
 }
 
 /* -----------------------------------------------------------------------------

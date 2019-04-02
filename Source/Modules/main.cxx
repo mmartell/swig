@@ -11,7 +11,7 @@
  * Main entry point to the SWIG core.
  * ----------------------------------------------------------------------------- */
 
-#include "swigconfig.h"
+//#include "swigconfig.h"
 
 #if defined(_WIN32)
 #define WIN32_LEAN_AND_MEAN
@@ -636,7 +636,8 @@ static void getoptions(int argc, char *argv[]) {
 	}
       } else if (strcmp(argv[i], "-version") == 0) {
 	fprintf(stdout, "\nSWIG Version %s\n", Swig_package_version());
-	fprintf(stdout, "\nCompiled with %s [%s]\n", SWIG_CXX, SWIG_PLATFORM);
+  //fprintf(stdout, "\nCompiled with %s [%s]\n", SWIG_CXX, SWIG_PLATFORM);
+  fprintf(stdout, "\nCompiled with VS 2017, X64\n");
 	fprintf(stdout, "\nConfigured options: %cpcre\n",
 #ifdef HAVE_PCRE
 		'+'
@@ -644,7 +645,7 @@ static void getoptions(int argc, char *argv[]) {
 		'-'
 #endif
 	    );
-	fprintf(stdout, "\nPlease see %s for reporting bugs and further information\n", PACKAGE_BUGREPORT);
+	//fprintf(stdout, "\nPlease see %s for reporting bugs and further information\n", PACKAGE_BUGREPORT);
 	SWIG_exit(EXIT_SUCCESS);
       } else if (strcmp(argv[i], "-copyright") == 0) {
 	fprintf(stdout, "\nSWIG Version %s\n", Swig_package_version());
@@ -901,7 +902,8 @@ int SWIG_main(int argc, char *argv[], const TargetLanguageModule *tlm) {
   Preprocessor_define((DOH *) "__STDC__", 0);
 
   // Set the SWIG version value in format 0xAABBCC from package version expected to be in format A.B.C
-  String *package_version = NewString(PACKAGE_VERSION); /* Note that the fakeversion has not been set at this point */
+  //String *package_version = NewString(PACKAGE_VERSION); /* Note that the fakeversion has not been set at this point */
+  String *package_version = NewString("4.1.0"); /* Note that the fakeversion has not been set at this point */
   char *token = strtok(Char(package_version), ".");
   String *vers = NewString("SWIG_VERSION 0x");
   int count = 0;
@@ -936,14 +938,14 @@ int SWIG_main(int argc, char *argv[], const TargetLanguageModule *tlm) {
 #if defined(_WIN32)
     char buf[MAX_PATH];
     char *p;
-    if (!(GetModuleFileName(0, buf, MAX_PATH) == 0 || (p = strrchr(buf, '\\')) == 0)) {
+    if (!(GetModuleFileName(0, (LPWSTR)buf, MAX_PATH) == 0 || (p = strrchr(buf, '\\')) == 0)) {
       *(p + 1) = '\0';
       SwigLib = NewStringf("%sLib", buf); // Native windows installation path
     } else {
       SwigLib = NewStringf("");	// Unexpected error
     }
-    if (Len(SWIG_LIB_WIN_UNIX) > 0)
-      SwigLibWinUnix = NewString(SWIG_LIB_WIN_UNIX); // Unix installation path using a drive letter (for msys/mingw)
+    //if (Len(SWIG_LIB_WIN_UNIX) > 0)
+     // SwigLibWinUnix = NewString(SWIG_LIB_WIN_UNIX); // Unix installation path using a drive letter (for msys/mingw)
 #else
     SwigLib = NewString(SWIG_LIB);
 #endif
