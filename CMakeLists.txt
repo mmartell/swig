@@ -118,6 +118,7 @@ include_directories(
     "${SWIG_SOURCE_DIR}/CParse"
     "${SWIG_SOURCE_DIR}/Include"
     "${SWIG_SOURCE_DIR}/DOH"
+    "${SWIG_SOURCE_DIR}/Doxygen"
     "${SWIG_SOURCE_DIR}/Swig"
     "${SWIG_SOURCE_DIR}/Preprocessor"
     "${SWIG_SOURCE_DIR}/Modules"
@@ -150,17 +151,21 @@ add_library(cparse
     "${SWIG_SOURCE_DIR}/CParse/cscanner.c"
     "${SWIG_SOURCE_DIR}/CParse/templ.c"
     "${SWIG_SOURCE_DIR}/CParse/util.c"
-    "${PROJECT_BINARY_DIR}/Source/CParse/parser.c"
-    "${PROJECT_BINARY_DIR}/Source/CParse/parser.h"
+    "${SWIG_SOURCE_DIR}/CParse/parser.c"
+    "${SWIG_SOURCE_DIR}/CParse/parser.h"
+    "${SWIG_SOURCE_DIR}/CParse/cparse.h"
 )
 
 add_library(preprocessor
     "${SWIG_SOURCE_DIR}/Preprocessor/cpp.c"
     "${SWIG_SOURCE_DIR}/Preprocessor/expr.c"
+    "${SWIG_SOURCE_DIR}/Preprocessor/preprocessor.h"
 )
 
 add_library(doh
     "${SWIG_SOURCE_DIR}/DOH/base.c"
+    "${SWIG_SOURCE_DIR}/DOH/doh.h"
+    "${SWIG_SOURCE_DIR}/DOH/dohint.h"
     "${SWIG_SOURCE_DIR}/DOH/file.c"
     "${SWIG_SOURCE_DIR}/DOH/fio.c"
     "${SWIG_SOURCE_DIR}/DOH/hash.c"
@@ -168,6 +173,20 @@ add_library(doh
     "${SWIG_SOURCE_DIR}/DOH/memory.c"
     "${SWIG_SOURCE_DIR}/DOH/string.c"
     "${SWIG_SOURCE_DIR}/DOH/void.c"
+)
+
+add_library(doxygen
+    "${SWIG_SOURCE_DIR}/Doxygen/doxycommands.h"
+    "${SWIG_SOURCE_DIR}/Doxygen/doxyentity.cxx"
+    "${SWIG_SOURCE_DIR}/Doxygen/doxyentity.h"
+    "${SWIG_SOURCE_DIR}/Doxygen/doxyparser.cxx"
+    "${SWIG_SOURCE_DIR}/Doxygen/doxyparser.h"
+    "${SWIG_SOURCE_DIR}/Doxygen/doxytranslator.cxx"
+    "${SWIG_SOURCE_DIR}/Doxygen/doxytranslator.h"
+    "${SWIG_SOURCE_DIR}/Doxygen/javadoc.cxx"
+    "${SWIG_SOURCE_DIR}/Doxygen/javadoc.h"
+    "${SWIG_SOURCE_DIR}/Doxygen/pydoc.cxx"
+    "${SWIG_SOURCE_DIR}/Doxygen/pydoc.h"
 )
 
 add_library(core
@@ -183,6 +202,13 @@ add_library(core
     "${SWIG_SOURCE_DIR}/Swig/parms.c"
     "${SWIG_SOURCE_DIR}/Swig/scanner.c"
     "${SWIG_SOURCE_DIR}/Swig/stype.c"
+    "${SWIG_SOURCE_DIR}/Swig/swig.h"
+    "${SWIG_SOURCE_DIR}/Swig/swigfile.h"
+    "${SWIG_SOURCE_DIR}/Swig/swigopt.h"
+    "${SWIG_SOURCE_DIR}/Swig/swigparm.h"
+    "${SWIG_SOURCE_DIR}/Swig/swigscan.h"
+    "${SWIG_SOURCE_DIR}/Swig/swigtree.h"
+    "${SWIG_SOURCE_DIR}/Swig/swigwrap.h"
     "${SWIG_SOURCE_DIR}/Swig/symbol.c"
     "${SWIG_SOURCE_DIR}/Swig/tree.c"
     "${SWIG_SOURCE_DIR}/Swig/typemap.c"
@@ -205,14 +231,13 @@ add_library(modules
     "${SWIG_SOURCE_DIR}/Modules/emit.cxx"
     "${SWIG_SOURCE_DIR}/Modules/go.cxx"
     "${SWIG_SOURCE_DIR}/Modules/guile.cxx"
+    "${SWIG_SOURCE_DIR}/Modules/interface.cxx"
     "${SWIG_SOURCE_DIR}/Modules/java.cxx"
     "${SWIG_SOURCE_DIR}/Modules/javascript.cxx"
     "${SWIG_SOURCE_DIR}/Modules/lang.cxx"
     "${SWIG_SOURCE_DIR}/Modules/lua.cxx"
-    "${SWIG_SOURCE_DIR}/Modules/interface.cxx"
-#    "${SWIG_SOURCE_DIR}/Modules/matlab.cxx"
+    "${SWIG_SOURCE_DIR}/Modules/main.cxx"
     "${SWIG_SOURCE_DIR}/Modules/modula3.cxx"
-    "${SWIG_SOURCE_DIR}/Modules/module.cxx"
     "${SWIG_SOURCE_DIR}/Modules/mzscheme.cxx"
     "${SWIG_SOURCE_DIR}/Modules/nested.cxx"
     "${SWIG_SOURCE_DIR}/Modules/ocaml.cxx"
@@ -220,20 +245,19 @@ add_library(modules
     "${SWIG_SOURCE_DIR}/Modules/overload.cxx"
     "${SWIG_SOURCE_DIR}/Modules/perl5.cxx"
     "${SWIG_SOURCE_DIR}/Modules/php.cxx"
-    "${SWIG_SOURCE_DIR}/Modules/php5.cxx"
     "${SWIG_SOURCE_DIR}/Modules/pike.cxx"
     "${SWIG_SOURCE_DIR}/Modules/python.cxx"
     "${SWIG_SOURCE_DIR}/Modules/r.cxx"
     "${SWIG_SOURCE_DIR}/Modules/ruby.cxx"
-    "${SWIG_SOURCE_DIR}/Modules/s-exp.cxx"
     "${SWIG_SOURCE_DIR}/Modules/scilab.cxx"
+    "${SWIG_SOURCE_DIR}/Modules/s-exp.cxx"
+    "${SWIG_SOURCE_DIR}/Modules/swigmain.cxx"
+    "${SWIG_SOURCE_DIR}/Modules/swigmod.h"
     "${SWIG_SOURCE_DIR}/Modules/tcl8.cxx"
     "${SWIG_SOURCE_DIR}/Modules/typepass.cxx"
     "${SWIG_SOURCE_DIR}/Modules/uffi.cxx"
     "${SWIG_SOURCE_DIR}/Modules/utils.cxx"
     "${SWIG_SOURCE_DIR}/Modules/xml.cxx"
-    "${PROJECT_BINARY_DIR}/Source/Include/swigconfig.h"
-    "${SWIG_SOURCE_DIR}/Include/swigwarn.h"
 )
 
 add_executable(swig
@@ -241,7 +265,7 @@ add_executable(swig
     "${SWIG_SOURCE_DIR}/Modules/swigmain.cxx"
 )
 
-target_link_libraries ( swig cparse preprocessor doh core modules ${PCRE_LIBRARIES} )
+target_link_libraries ( swig cparse preprocessor doh doxygen core modules ${PCRE_LIBRARIES} )
 install ( TARGETS swig DESTINATION bin )
 
 
