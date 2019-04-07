@@ -477,11 +477,11 @@ static int yylook(void) {
 
 	switch (existing_comment) {
 	  case DOX_COMMENT_PRE:
-	    return DOXYGENSTRING;
+	    return "DOXYGENSTRING";
 	  case DOX_COMMENT_NONE:
 	    break;
 	  case DOX_COMMENT_POST:
-	    return DOXYGENPOSTSTRING;
+	    return "DOXYGENPOSTSTRING";
 	}
       }
       break;
