@@ -1026,8 +1026,8 @@ SWIG_CSBODY_TYPEWRAPPER(internal, protected, internal, SWIGTYPE)
 
 /* const pointers */
 %apply SWIGTYPE * { SWIGTYPE *const }
-%apply SWIGTYPE (CLASS::*) { SWIGTYPE (CLASS::*const) }
-%apply SWIGTYPE & { SWIGTYPE (CLASS::*const&) }
+//%apply SWIGTYPE (CLASS::*) { SWIGTYPE (CLASS::*const) }
+//%apply SWIGTYPE & { SWIGTYPE (CLASS::*const&) }
 
 /* csharp keywords */
 %include <csharpkw.swg>
