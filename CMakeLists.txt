@@ -55,13 +55,13 @@ include(CheckCSourceCompiles)
 
 # HACK: didn't get the bool check working for Visual Studio 2008
 # TODO need to revise for recent versions
-if(MSVC)
-set(HAVE_BOOL 1)
-else()
-set(CMAKE_EXTRA_INCLUDE_FILES stdbool.h)
-check_type_size("bool" HAVE_BOOL)
-set(CMAKE_EXTRA_INCLUDE_FILES)
-endif()
+#if(MSVC)
+#set(HAVE_BOOL 1)
+#else()
+#set(CMAKE_EXTRA_INCLUDE_FILES stdbool.h)
+#check_type_size("bool" HAVE_BOOL)
+#set(CMAKE_EXTRA_INCLUDE_FILES)
+#endif()
 
 check_include_file("inttypes.h" HAVE_INTTYPES_H)
 check_include_file("memory.h" HAVE_MEMORY_H)
@@ -148,12 +148,12 @@ install ( FILES ${CMAKE_CURRENT_BINARY_DIR}/Lib/swigwarn.swg DESTINATION ${SWIG_
 # ---------
 
 add_library(cparse
+    "${SWIG_SOURCE_DIR}/CParse/cparse.h"
     "${SWIG_SOURCE_DIR}/CParse/cscanner.c"
     "${SWIG_SOURCE_DIR}/CParse/templ.c"
     "${SWIG_SOURCE_DIR}/CParse/util.c"
-    "${SWIG_SOURCE_DIR}/CParse/parser.c"
-    "${SWIG_SOURCE_DIR}/CParse/parser.h"
-    "${SWIG_SOURCE_DIR}/CParse/cparse.h"
+    "${PROJECT_BINARY_DIR}/Source/CParse/parser.c"
+    "${PROJECT_BINARY_DIR}/Source/CParse/parser.h"
 )
 
 add_library(preprocessor
@@ -257,8 +257,8 @@ add_library(modules
     "${SWIG_SOURCE_DIR}/Modules/typepass.cxx"
     "${SWIG_SOURCE_DIR}/Modules/uffi.cxx"
     "${SWIG_SOURCE_DIR}/Modules/utils.cxx"
-    "${SWIG_SOURCE_DIR}/Modules/xml.cxx"
-)
+    "${SWIG_SOURCE_DIR}/Modules/xml.cxx" ***HERE***
+)   "${PROJECT_BINARY_DIR}/Source/Include/swigconfig.h"
 
 add_executable(swig
     "${SWIG_SOURCE_DIR}/Modules/main.cxx"
