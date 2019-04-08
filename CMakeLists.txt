@@ -108,6 +108,12 @@ configure_file(
     ${CMAKE_CURRENT_BINARY_DIR}/Source/Include/swigconfig.h
 )
 
+configure_file(
+    ${SWIG_SOURCE_DIR}/Include/swigwarn.h
+    ${PROJECT_BINARY_DIR}/Source/Include/swigwarn.h
+    COPYONLY
+)
+
 find_package(BISON REQUIRED)
 
 
@@ -257,8 +263,10 @@ add_library(modules
     "${SWIG_SOURCE_DIR}/Modules/typepass.cxx"
     "${SWIG_SOURCE_DIR}/Modules/uffi.cxx"
     "${SWIG_SOURCE_DIR}/Modules/utils.cxx"
-    "${SWIG_SOURCE_DIR}/Modules/xml.cxx" ***HERE***
-)   "${PROJECT_BINARY_DIR}/Source/Include/swigconfig.h"
+    "${SWIG_SOURCE_DIR}/Modules/xml.cxx"
+    "${PROJECT_BINARY_DIR}/Source/Include/swigconfig.h"
+    "${PROJECT_BINARY_DIR}/Source/Include/swigwarn.h"
+)
 
 add_executable(swig
     "${SWIG_SOURCE_DIR}/Modules/main.cxx"
